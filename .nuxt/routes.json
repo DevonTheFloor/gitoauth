@@ -1,0 +1,16 @@
+[
+  {
+    "name": "seedata",
+    "path": "/seedata",
+    "component": "/home/devon/Documents/DEV/gitoauth/pages/seedata.vue",
+    "chunkName": "pages/seedata",
+    "_name": "_48494afa"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/home/devon/Documents/DEV/gitoauth/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_8775ac50"
+  }
+]
