@@ -11,6 +11,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/login/github/', (req, res, next) => {
+  console.log('step 1')
   const code = req.query.code
   console.log('code:', code)
   if (!code) {
@@ -19,18 +20,37 @@ app.get('/login/github/', (req, res, next) => {
       message: 'No Code'
     })
   } else {
+    console.log('step 2')
     request
       .post('https://github.com/login/oauth/access_token')
       .send({
         client_id: '485307765a002578a888',
         client_secret: 'c9e6780bbfb45decb41cabc5ca4b5497d426c4a3',
+        redirect_uri: 'http://localhost:2222/login/github/token/',
+        scope: 'user',
         code
       })
       .set('Accept', 'application/json')
       .then((res) => {
         console.log('token :', res.body.access_token)
-        const data = res.body.access_token
-        res.send(data)
+        const accessToken = res.body.access_token
+        if (!accessToken) {
+          res.send({
+            message: 'No token find'
+          })
+        } else {
+          console.log('step 3')
+          request
+            .get('https://api.github.com/user')
+            .set('Authorization', 'bearer ' + accessToken)
+            .set('Accept', 'application/json')
+            .set('User-Agent', 'test_app')
+            .then((result) => {
+              console.log('type :', typeof (result.text))
+              console.log('result: ', result.text)
+            })
+            .catch(error => console.log(error))
+        }
       })
   }
 })
