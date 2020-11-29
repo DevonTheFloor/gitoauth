@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
@@ -22,12 +21,7 @@ export default {
     }
   },
   methods: {
-    githubcnx () {
-      alert('alert')
-      axios.get('http://localhost:2222/gotcode/')
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-    }
+
   }
 }
 </script>

@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-// const axios = require('axios')
 const request = require('superagent')
 
 app.use((req, res, next) => {
@@ -46,8 +45,14 @@ app.get('/login/github/', (req, res, next) => {
             .set('Accept', 'application/json')
             .set('User-Agent', 'test_app')
             .then((result) => {
-              console.log('type :', typeof (result.text))
-              console.log('result: ', result.text)
+              const datas = result.body
+              const user = datas.login
+              const avatar = datas.avatar_url
+              // console.log(result.body)
+              if (user) {
+                console.log(user)
+                // search user if !user create else token
+              }
             })
             .catch(error => console.log(error))
         }
