@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const cookieSession = require('cookie-session')
+// const cookieSession = require('cookie-session')
 const mongoose = require('mongoose')
 const loginRoutes = require('./routes/login')
 const User = require('./models/user')
@@ -19,12 +19,13 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
   next()
 })
-app.use(
+/* app.use(
   cookieSession({
     name: 'logged-session',
     secret: 'VERY_SECRET_COOKIE'
   })
-)
+) */
+
 app.use('/login', loginRoutes)
 app.use('/test/', (req, res, next) => {
   const user = new User()

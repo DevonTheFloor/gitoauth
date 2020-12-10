@@ -4,7 +4,12 @@ const request = require('superagent')
 
 // }
 // }
-function getAccessToken (code) {
+
+exports.getUser = (req, res, next) => {
+  console.log('step 1')
+  const code = req.query.code
+  console.log('code:', code)
+  const accessToken = ''
   request
     .post('https://github.com/login/oauth/access_token')
     .send({
@@ -14,7 +19,6 @@ function getAccessToken (code) {
       scope: 'user',
       code
     })
-
     .set('Accept', 'application/json')
     .then((res) => {
       console.log('token :', res.body.access_token)
@@ -23,8 +27,6 @@ function getAccessToken (code) {
       return accessToken
     })
     .catch(error => console.log(error))
-}
-function getUserData (accessToken) {
   request
     .get('https://api.github.com/user')
     .set('Authorization', 'bearer ' + accessToken)
@@ -43,14 +45,6 @@ function getUserData (accessToken) {
       return userId
     })
     .catch(error => console.log(error))
-}
-
-exports.getUser = (req, res, next) => {
-  console.log('step 1')
-  const code = req.query.code
-  console.log('code:', code)
-  getAccessToken()
-  getUserData()
 }
 /* function searchUser (req, res, login, avatarUrl) {
   user.findOne({ login })
