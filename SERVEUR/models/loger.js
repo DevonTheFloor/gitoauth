@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 const logerSchema = mongoose.Schema({
-  user: { type: Object }
+  login: { type: String },
+  avatarUrl: { type: String }
 })
 
 module.exports = mongoose.model('Loger', logerSchema)

@@ -42,17 +42,32 @@ exports.getUser = async (req, res, next) => {
       console.log('resData: ', res.data)
       login = res.data.login
       avatarUrl = res.data.avatar_url
-      const userId = {
+      userId = {
         login,
         avatarUrl
       }
+      console.log('befor return : ', userId)
       return userId
     })
     .catch(error => console.log(error))
-  const loger = new Loger()
-  loger.save({ user: userId })
-    .then(() => res.redirect('http://localhost:3000/seedata'))
-    .catch(() => res.status(201).json({
-      message: 'cannot do this'
-    }))
+  console.log('userId :', userId)
+  const loger = new Loger({
+    login: userId.login,
+    avatarUrl: userId.avatarUrl
+  })
+  Loger.findOne({ login: userId.login })
+    .then((data) => {
+      console.log(data)
+      if (data.login) {
+        console.log('datalogin :', data.login)
+        res.redirect('http://localhost:3000/seedata')
+      }
+    })
+    .catch(() => {
+      loger.save({ login: userId.login, avatarUrl: userId.avatarUrl })
+        .then(() => res.redirect('http://devonthefloor.free.fr'))
+        .catch(() => res.status(201).json({
+          message: 'cannot do this'
+        }))
+    })
 }
